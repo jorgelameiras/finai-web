@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
   BarChart2,
+  MessageSquare,
   List,
   RefreshCw,
   Settings,
@@ -15,6 +16,7 @@ import { DEMO_USER } from "@/lib/demo";
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
   { icon: BarChart2, label: "Analytics", href: "/analytics" },
+  { icon: MessageSquare, label: "Chat", href: "/chat" },
   { icon: List, label: "Transactions", href: "/transactions" },
   { icon: RefreshCw, label: "Subscriptions", href: "/subscriptions" },
   { icon: Settings, label: "Settings", href: "/settings" },
