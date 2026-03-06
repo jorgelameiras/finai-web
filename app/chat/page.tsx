@@ -67,7 +67,7 @@ export default function ChatPage() {
     let aiText = "Sorry, I am having trouble connecting. Please try again.";
     try {
       const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBVcv7P0VfotL40WoiQRUwqOeEl9sstjPE",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyBVcv7P0VfotL40WoiQRUwqOeEl9sstjPE",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -78,7 +78,8 @@ export default function ChatPage() {
       );
       const data = await res.json();
       aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || aiText;
-    } catch {
+    } catch (err) {
+      console.error('Gemini API error:', err);
       // fallback message already set
     }
 
