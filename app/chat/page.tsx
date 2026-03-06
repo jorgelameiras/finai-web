@@ -11,9 +11,6 @@ interface Message {
   time: string;
 }
 
-const SYSTEM_CONTEXT =
-  "You are FinAI, a personal finance assistant. The user is in demo mode with the following financial data: Balance: 12840.50, Monthly income: 4200, Monthly spend: 3200, Top categories: Housing 1850, Food 642, Transport 380, Shopping 280. Subscriptions: Netflix 15.99, Spotify 9.99, iCloud 0.99, Adobe 54.99. Be helpful, concise, and specific. Always reference their actual numbers.";
-
 const SUGGESTIONS = [
   "Where did I spend the most this month?",
   "How much have I spent on subscriptions?",
@@ -66,18 +63,13 @@ export default function ChatPage() {
 
     let aiText = "Sorry, I am having trouble connecting. Please try again.";
     try {
-      const res = await fetch(
-        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBJ4eSRDQeaqDdcxvvTOdz5OF5g8WLgmxU",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: SYSTEM_CONTEXT + "\n\nUser: " + text.trim() }] }],
-          }),
-        }
-      );
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text.trim() }),
+      });
       const data = await res.json();
-      aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || aiText;
+      aiText = data.text || aiText;
     } catch (err) {
       console.error('Gemini API error:', err);
       // fallback message already set
