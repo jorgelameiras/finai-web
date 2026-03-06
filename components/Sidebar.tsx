@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -10,8 +11,31 @@ import {
   Settings,
   LogOut,
   X,
+  Fuel,
+  ShoppingCart,
+  Coffee,
+  Dumbbell,
+  Home,
+  Car,
+  Plane,
+  Music,
+  Gamepad2,
+  Heart,
+  Zap,
+  Package,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { DEMO_USER } from "@/lib/demo";
+import { loadCustomTabs, CustomTab } from "@/lib/aiProviders";
+
+const ICON_MAP: Record<string, LucideIcon> = {
+  LayoutDashboard, BarChart2, MessageSquare, List, RefreshCw, Settings,
+  Fuel, ShoppingCart, Coffee, Dumbbell, Home, Car, Plane, Music, Gamepad2, Heart, Zap, Package,
+};
+
+function getIcon(name: string): LucideIcon {
+  return ICON_MAP[name] || BarChart2;
+}
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
@@ -31,6 +55,15 @@ export default function Sidebar({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const [customTabs, setCustomTabs] = useState<CustomTab[]>([]);
+
+  useEffect(() => {
+    const load = () => setCustomTabs(loadCustomTabs());
+    load();
+    window.addEventListener("storage", load);
+    return () => window.removeEventListener("storage", load);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("demoMode");
     router.push("/login");
@@ -64,7 +97,7 @@ export default function Sidebar({
           </button>
         </div>
 
-        <nav className="flex-1 px-3 space-y-1">
+        <nav className="flex-1 px-3 space-y-1 overflow-y-auto">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -85,6 +118,36 @@ export default function Sidebar({
               </button>
             );
           })}
+
+          {customTabs.length > 0 && (
+            <div className="mt-4">
+              <p className="text-xs text-gray-500 uppercase tracking-wider mb-2 px-2">
+                My Tabs
+              </p>
+              {customTabs.map((tab) => {
+                const Icon = getIcon(tab.icon);
+                const href = `/custom/${tab.id}`;
+                const active = pathname?.includes(tab.id);
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      router.push(href);
+                      onClose();
+                    }}
+                    className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors ${
+                      active
+                        ? "bg-accent/10 text-accent font-medium"
+                        : "text-gray-400 hover:text-white hover:bg-white/5"
+                    }`}
+                  >
+                    <Icon size={18} />
+                    <span className="truncate">{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </nav>
 
         <div className="p-4 border-t border-white/[0.06]">

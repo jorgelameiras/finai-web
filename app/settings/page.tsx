@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import DashboardLayout from "@/components/DashboardLayout";
 import { DEMO_USER } from "@/lib/demo";
-import { LogOut } from "lucide-react";
+import { LogOut, Bot, Trash2 } from "lucide-react";
+import {
+  AIProvider,
+  AI_PROVIDERS,
+  loadAIConfig,
+  saveAIConfig,
+  loadCustomTabs,
+  deleteCustomTab,
+  CustomTab,
+} from "@/lib/aiProviders";
 
 function Toggle({ enabled, onToggle }: { enabled: boolean; onToggle: () => void }) {
   return (
@@ -30,6 +39,24 @@ export default function SettingsPage() {
   const [weekly, setWeekly] = useState(true);
   const [privacy, setPrivacy] = useState(true);
 
+  // AI Config
+  const [aiProvider, setAiProvider] = useState<AIProvider>("claude");
+  const [aiKey, setAiKey] = useState("");
+  const [openclawUrl, setOpenclawUrl] = useState("");
+  const [aiSaved, setAiSaved] = useState(false);
+  const [customTabs, setCustomTabs] = useState<CustomTab[]>([]);
+  const [testStatus, setTestStatus] = useState<"idle" | "testing" | "ok" | "error">("idle");
+
+  useEffect(() => {
+    const config = loadAIConfig();
+    if (config) {
+      setAiProvider(config.provider);
+      setAiKey(config.apiKey);
+      setOpenclawUrl(config.openclawUrl || "");
+    }
+    setCustomTabs(loadCustomTabs());
+  }, []);
+
   const initials = DEMO_USER.name
     .split(" ")
     .map((n) => n[0])
@@ -40,9 +67,149 @@ export default function SettingsPage() {
     router.push("/login");
   };
 
+  const saveAI = () => {
+    saveAIConfig({ provider: aiProvider, apiKey: aiKey, openclawUrl });
+    setAiSaved(true);
+    setTimeout(() => setAiSaved(false), 2000);
+  };
+
+  const testConnection = async () => {
+    setTestStatus("testing");
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: 'Say "connected" in one word',
+          provider: aiProvider,
+          apiKey: aiKey,
+          openclawUrl,
+        }),
+      });
+      const data = await res.json();
+      setTestStatus(data.text ? "ok" : "error");
+    } catch {
+      setTestStatus("error");
+    }
+    setTimeout(() => setTestStatus("idle"), 3000);
+  };
+
+  const handleDeleteTab = (id: string) => {
+    deleteCustomTab(id);
+    setCustomTabs(loadCustomTabs());
+    window.dispatchEvent(new Event("storage"));
+  };
+
+  const selectedProvider = AI_PROVIDERS.find((p) => p.id === aiProvider);
+
   return (
     <DashboardLayout title="Settings">
       <div className="max-w-2xl space-y-6">
+        {/* AI Assistant */}
+        <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <Bot size={20} className="text-accent" />
+            <h3 className="text-base font-semibold text-white">AI Assistant</h3>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <label className="text-sm text-gray-400 block mb-1.5">Provider</label>
+              <select
+                value={aiProvider}
+                onChange={(e) => setAiProvider(e.target.value as AIProvider)}
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-accent/50 appearance-none"
+              >
+                {AI_PROVIDERS.map((p) => (
+                  <option key={p.id} value={p.id} className="bg-[#13131F]">
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="text-sm text-gray-400 block mb-1.5">API Key</label>
+              <input
+                type="password"
+                value={aiKey}
+                onChange={(e) => setAiKey(e.target.value)}
+                placeholder={selectedProvider?.placeholder}
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-accent/50"
+              />
+            </div>
+            {aiProvider === "openclaw" && (
+              <div>
+                <label className="text-sm text-gray-400 block mb-1.5">OpenClaw URL</label>
+                <input
+                  type="text"
+                  value={openclawUrl}
+                  onChange={(e) => setOpenclawUrl(e.target.value)}
+                  placeholder="https://your-openclaw-instance.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-accent/50"
+                />
+              </div>
+            )}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={testConnection}
+                disabled={!aiKey || testStatus === "testing"}
+                className="px-4 py-2 rounded-lg border border-white/10 text-sm text-gray-300 hover:bg-white/5 transition-colors disabled:opacity-40"
+              >
+                {testStatus === "testing" ? "Testing..." : "Test Connection"}
+              </button>
+              <button
+                onClick={saveAI}
+                disabled={!aiKey}
+                className="px-4 py-2 rounded-lg bg-accent text-white text-sm font-medium hover:bg-accent/80 transition-colors disabled:opacity-40"
+              >
+                {aiSaved ? "Saved!" : "Save"}
+              </button>
+              {testStatus === "ok" && (
+                <span className="text-sm text-green-400">Connected!</span>
+              )}
+              {testStatus === "error" && (
+                <span className="text-sm text-red-400">Connection failed</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Custom Tabs */}
+        <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <h3 className="text-base font-semibold text-white">My Custom Tabs</h3>
+            {customTabs.length > 0 && (
+              <span className="text-xs bg-accent/20 text-accent px-2 py-0.5 rounded-full">
+                {customTabs.length}
+              </span>
+            )}
+          </div>
+          {customTabs.length === 0 ? (
+            <p className="text-sm text-gray-400">
+              No custom tabs yet. Ask your AI to create one in the Chat!
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {customTabs.map((tab) => (
+                <div
+                  key={tab.id}
+                  className="flex items-center justify-between py-2 border-b border-white/5 last:border-0"
+                >
+                  <div>
+                    <p className="text-sm text-white font-medium">{tab.label}</p>
+                    <p className="text-xs text-gray-500">{tab.description}</p>
+                  </div>
+                  <button
+                    onClick={() => handleDeleteTab(tab.id)}
+                    className="text-gray-500 hover:text-red-400 transition-colors p-1"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         {/* Profile */}
         <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
           <h3 className="text-base font-semibold text-white mb-4">Profile</h3>
@@ -59,9 +226,7 @@ export default function SettingsPage() {
 
         {/* Notifications */}
         <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
-          <h3 className="text-base font-semibold text-white mb-4">
-            Notifications
-          </h3>
+          <h3 className="text-base font-semibold text-white mb-4">Notifications</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
@@ -101,9 +266,7 @@ export default function SettingsPage() {
 
         {/* Danger Zone */}
         <div className="bg-[rgba(30,31,48,0.8)] border border-negative/20 rounded-xl p-6">
-          <h3 className="text-base font-semibold text-negative mb-2">
-            Danger Zone
-          </h3>
+          <h3 className="text-base font-semibold text-negative mb-2">Danger Zone</h3>
           <p className="text-sm text-gray-400 mb-4">
             Permanently delete your account and all associated data.
           </p>
