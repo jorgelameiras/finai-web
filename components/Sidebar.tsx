@@ -1,0 +1,114 @@
+"use client";
+
+import { usePathname, useRouter } from "next/navigation";
+import {
+  LayoutDashboard,
+  BarChart2,
+  List,
+  RefreshCw,
+  Settings,
+  LogOut,
+  X,
+} from "lucide-react";
+import { DEMO_USER } from "@/lib/demo";
+
+const navItems = [
+  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: BarChart2, label: "Analytics", href: "/analytics" },
+  { icon: List, label: "Transactions", href: "/transactions" },
+  { icon: RefreshCw, label: "Subscriptions", href: "/subscriptions" },
+  { icon: Settings, label: "Settings", href: "/settings" },
+];
+
+export default function Sidebar({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const basePath = "/finai-web";
+
+  const handleLogout = () => {
+    localStorage.removeItem("demoMode");
+    router.push("/login");
+  };
+
+  const initials = DEMO_USER.name
+    .split(" ")
+    .map((n) => n[0])
+    .join("");
+
+  return (
+    <>
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+      <aside
+        className={`fixed lg:static inset-y-0 left-0 z-50 w-[260px] bg-bg border-r border-white/[0.06] flex flex-col transition-transform lg:translate-x-0 ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between p-6">
+          <h1 className="text-xl font-bold">
+            <span className="text-white">Fin</span>
+            <span className="text-accent">AI</span>
+          </h1>
+          <button onClick={onClose} className="lg:hidden text-gray-400">
+            <X size={20} />
+          </button>
+        </div>
+
+        <nav className="flex-1 px-3 space-y-1">
+          {navItems.map((item) => {
+            const isActive = pathname === `${basePath}${item.href}`;
+            return (
+              <button
+                key={item.href}
+                onClick={() => {
+                  router.push(item.href);
+                  onClose();
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                  isActive
+                    ? "bg-accent/10 text-accent font-medium"
+                    : "text-gray-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                <item.icon size={18} />
+                {item.label}
+              </button>
+            );
+          })}
+        </nav>
+
+        <div className="p-4 border-t border-white/[0.06]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-accent/20 text-accent flex items-center justify-center text-sm font-medium">
+              {initials}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-white truncate">
+                {DEMO_USER.name}
+              </p>
+              <p className="text-xs text-gray-500 truncate">
+                {DEMO_USER.email}
+              </p>
+            </div>
+            <button
+              onClick={handleLogout}
+              className="text-gray-500 hover:text-white transition-colors"
+            >
+              <LogOut size={16} />
+            </button>
+          </div>
+        </div>
+      </aside>
+    </>
+  );
+}
