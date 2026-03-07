@@ -16,13 +16,18 @@ export default function SignupPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { name } },
+      options: {
+        data: { name },
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+      },
     });
     if (error) {
       setError(error.message);
+    } else if (data.user && data.user.identities && data.user.identities.length === 0) {
+      setError("An account with this email already exists. Please sign in instead.");
     } else {
       setSuccess(true);
     }
@@ -51,12 +56,24 @@ export default function SignupPage() {
 
           {success ? (
             <div className="text-center space-y-4">
-              <div className="bg-positive/10 border border-positive/20 text-positive text-sm rounded-lg p-4">
-                Account created! Check your email to confirm your account.
-              </div>
+              <div className="text-5xl mb-2">📬</div>
+              <h3 className="text-white font-semibold text-lg">Check your email</h3>
+              <p className="text-gray-400 text-sm">
+                We sent a confirmation link to <span className="text-accent">{email}</span>.
+                Click it to activate your account and start using FinAI.
+              </p>
+              <p className="text-gray-500 text-xs">
+                Didn't receive it? Check your spam folder or{" "}
+                <button
+                  onClick={() => { setSuccess(false); setEmail(""); setPassword(""); }}
+                  className="text-accent hover:underline"
+                >
+                  try again
+                </button>
+              </p>
               <Link
                 href="/login"
-                className="text-accent text-sm hover:underline block"
+                className="text-accent text-sm hover:underline block mt-4"
               >
                 Back to Sign In
               </Link>
