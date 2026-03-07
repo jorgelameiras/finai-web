@@ -88,7 +88,10 @@ export default function Sidebar({
         }`}
       >
         <div className="flex items-center justify-between p-6">
-          <img src="/finai-icon.png" alt="FinAI" className="h-10 w-auto object-contain" />
+          <div className="flex items-center gap-2">
+            <span className="text-xl font-bold text-white">Fin</span>
+            <span className="text-xl font-bold text-accent">AI</span>
+          </div>
           <button onClick={onClose} className="lg:hidden text-gray-400">
             <X size={20} />
           </button>

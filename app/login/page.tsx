@@ -34,7 +34,10 @@ export default function LoginPage() {
     <div className="min-h-screen bg-bg flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <img src="/finai-icon.png" alt="FinAI" className="h-16 w-auto mx-auto object-contain" />
+          <div className="flex items-center justify-center gap-1">
+            <span className="text-4xl font-bold text-white">Fin</span>
+            <span className="text-4xl font-bold text-accent">AI</span>
+          </div>
           <p className="text-gray-400 mt-2">Smart financial management</p>
         </div>
 
