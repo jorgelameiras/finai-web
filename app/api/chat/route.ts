@@ -14,17 +14,93 @@ Chart types: bar, line, pie
 Only include this block if the user explicitly asks to create a new tab or tracking section. Never include it for regular questions.
 Be helpful, concise, and reference their actual numbers.`
 
+const ALLOWED_PROVIDERS = ['claude', 'openai', 'openclaw'] as const
+type Provider = typeof ALLOWED_PROVIDERS[number]
+
+const MAX_MESSAGE_LENGTH = 4000
+const MAX_TRANSACTIONS = 50
+
+function isValidProvider(p: unknown): p is Provider {
+  return typeof p === 'string' && ALLOWED_PROVIDERS.includes(p as Provider)
+}
+
+function isValidPublicUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url)
+    if (parsed.protocol !== 'https:') return false
+    const hostname = parsed.hostname.toLowerCase()
+    if (
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname === '0.0.0.0' ||
+      hostname === '[::1]' ||
+      hostname === '169.254.169.254' ||
+      hostname === 'metadata.google.internal' ||
+      hostname.startsWith('10.') ||
+      hostname.startsWith('192.168.') ||
+      hostname.endsWith('.internal') ||
+      hostname.endsWith('.local') ||
+      /^172\.(1[6-9]|2\d|3[01])\./.test(hostname)
+    ) {
+      return false
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
+function sanitizeString(s: unknown, maxLen: number): string | null {
+  if (typeof s !== 'string') return null
+  const trimmed = s.trim()
+  if (trimmed.length === 0 || trimmed.length > maxLen) return null
+  return trimmed
+}
+
+interface TransactionInput {
+  merchant: string
+  amount: number
+  category: string
+  date: string
+}
+
+function sanitizeTransactions(txs: unknown): TransactionInput[] {
+  if (!Array.isArray(txs)) return []
+  return txs
+    .slice(0, MAX_TRANSACTIONS)
+    .filter((t): t is TransactionInput =>
+      typeof t === 'object' && t !== null &&
+      typeof t.merchant === 'string' && t.merchant.length <= 200 &&
+      typeof t.amount === 'number' && isFinite(t.amount) &&
+      typeof t.category === 'string' && t.category.length <= 100 &&
+      typeof t.date === 'string' && t.date.length <= 20
+    )
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { message, provider, apiKey, openclawUrl, transactions } = await req.json()
+    const body = await req.json()
 
-    if (!provider || !apiKey) {
+    if (!isValidProvider(body.provider)) {
+      return NextResponse.json({ error: 'Invalid AI provider' }, { status: 400 })
+    }
+    const provider = body.provider
+
+    const apiKey = sanitizeString(body.apiKey, 500)
+    if (!apiKey) {
       return NextResponse.json({ error: 'No AI provider configured' }, { status: 400 })
     }
 
+    const message = sanitizeString(body.message, MAX_MESSAGE_LENGTH)
+    if (!message) {
+      return NextResponse.json({ error: 'Message is required and must be under 4000 characters' }, { status: 400 })
+    }
+
+    const transactions = sanitizeTransactions(body.transactions)
+
     let txContext = ''
-    if (transactions && transactions.length > 0) {
-      txContext = '\nRelevant transactions:\n' + transactions.map((t: { merchant: string; amount: number; category: string; date: string }) =>
+    if (transactions.length > 0) {
+      txContext = '\nRelevant transactions:\n' + transactions.map((t) =>
         `- ${t.merchant}: $${Math.abs(t.amount)} (${t.category}, ${t.date})`
       ).join('\n')
     }
@@ -72,8 +148,12 @@ export async function POST(req: NextRequest) {
       responseText = data.choices[0].message.content
 
     } else if (provider === 'openclaw') {
-      const baseUrl = openclawUrl?.replace(/\/$/, '') || ''
-      const res = await fetch(`${baseUrl}/v1/chat/completions`, {
+      const rawUrl = typeof body.openclawUrl === 'string' ? body.openclawUrl.replace(/\/$/, '') : ''
+      if (!rawUrl || !isValidPublicUrl(rawUrl)) {
+        return NextResponse.json({ error: 'Invalid or missing OpenClaw URL. Must be a public HTTPS URL.' }, { status: 400 })
+      }
+
+      const res = await fetch(`${rawUrl}/v1/chat/completions`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${apiKey}`,
