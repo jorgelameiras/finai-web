@@ -16,11 +16,11 @@ const goals = [
 ];
 
 const incomeRanges = [
-  "Under $2k",
-  "$2k-$4k",
-  "$4k-$7k",
-  "$7k-$12k",
-  "$12k+",
+  "Under 2k",
+  "2k-4k",
+  "4k-7k",
+  "7k-12k",
+  "12k+",
 ];
 
 const slideVariants = {
@@ -204,7 +204,7 @@ function StepGoal({
   return (
     <div className="flex flex-col items-center text-center">
       <h2 className="text-2xl font-bold text-white mb-8">
-        What&apos;s your main financial goal?
+        What is your main financial goal?
       </h2>
       <div className="grid grid-cols-2 gap-4 w-full mb-8">
         {goals.map((g, i) => (
@@ -216,7 +216,7 @@ function StepGoal({
             onClick={() => setGoal(g.label)}
             className={`p-5 rounded-xl border text-left transition-all ${
               goal === g.label
-                ? "border-[#818CF8] bg-[#818CF8]/10 scale-[1.05] shadow-[0_0_20px_rgba(129,140,248,0.15)]"
+                ? "border-[#818CF8] bg-[#818CF8]/10 scale-[1.05] shadow-[0_0_20px_rgba(129,140,248,0.3)]"
                 : "border-white/10 bg-white/[0.03] hover:border-white/20"
             }`}
           >
@@ -251,14 +251,21 @@ function StepName({
       <h2 className="text-2xl font-bold text-white mb-8">
         What should we call you?
       </h2>
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Your name"
-        autoFocus
-        className="w-full max-w-xs px-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#818CF8] transition-colors text-center text-lg"
-      />
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="w-full max-w-xs"
+      >
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Your name"
+          autoFocus
+          className="w-full px-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-[#818CF8] transition-colors text-center text-lg"
+        />
+      </motion.div>
       <button
         onClick={onNext}
         disabled={!name.trim()}
@@ -283,7 +290,7 @@ function StepIncome({
   return (
     <div className="flex flex-col items-center text-center">
       <h2 className="text-2xl font-bold text-white mb-8">
-        Roughly, what&apos;s your monthly income?
+        Roughly, what is your monthly income?
       </h2>
       <div className="flex flex-wrap justify-center gap-3 mb-8">
         {incomeRanges.map((range, i) => (
@@ -291,7 +298,7 @@ function StepIncome({
             key={range}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: i * 0.08, duration: 0.3 }}
+            transition={{ delay: i * 0.1, duration: 0.3 }}
             onClick={() => setIncomeRange(range)}
             className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all ${
               incomeRange === range
@@ -370,12 +377,13 @@ function StepDone({
   onFinish: () => void;
 }) {
   const features = [
-    { icon: "✅", label: "Spending overview", status: "Unlocked" },
-    { icon: "✅", label: "AI chat", status: "Unlocked" },
+    { icon: "✅", label: "Spending overview", status: "Unlocked", locked: false },
+    { icon: "✅", label: "AI chat", status: "Unlocked", locked: false },
     {
       icon: "🔒",
       label: "AI Insights",
       status: "Add your AI key to unlock",
+      locked: true,
     },
   ];
 
@@ -415,7 +423,7 @@ function StepDone({
         transition={{ delay: 0.6, duration: 0.5 }}
         className="text-2xl font-bold text-white mb-8"
       >
-        You&apos;re all set, {name}!
+        You&apos;re all set, {name || "there"}!
       </motion.h2>
 
       <div className="w-full space-y-3 mb-8">
@@ -433,7 +441,7 @@ function StepDone({
             </span>
             <span
               className={`text-xs ${
-                f.icon === "🔒" ? "text-[#C084FC]" : "text-emerald-400"
+                f.locked ? "text-[#C084FC]" : "text-emerald-400"
               }`}
             >
               {f.status}
