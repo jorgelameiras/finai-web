@@ -10,9 +10,11 @@ import { supabase } from "@/lib/supabase";
 export default function DashboardLayout({
   title,
   children,
+  userName,
 }: {
   title: string;
   children: React.ReactNode;
+  userName?: string;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
@@ -46,7 +48,7 @@ export default function DashboardLayout({
             <h2 className="text-lg font-semibold text-white">{title}</h2>
           </div>
           <p className="text-sm text-gray-400 hidden sm:block">
-            {greeting}, {DEMO_USER.name.split(" ")[0]}
+            {greeting}, {userName || DEMO_USER.name.split(" ")[0]}
           </p>
         </header>
         <main className="flex-1 overflow-y-auto p-6">{children}</main>

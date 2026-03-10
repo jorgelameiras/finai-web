@@ -68,6 +68,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [ready, setReady] = useState(false);
   const [hasAiKey, setHasAiKey] = useState(false);
+  const [userName, setUserName] = useState<string | undefined>();
 
   useEffect(() => {
     const checkOnboarding = async () => {
@@ -90,6 +91,7 @@ export default function DashboardPage() {
         return;
       }
 
+      setUserName(profile.name);
       setHasAiKey(!!localStorage.getItem("aiApiKey"));
       setReady(true);
     };
@@ -99,7 +101,7 @@ export default function DashboardPage() {
   if (!ready) return null;
 
   return (
-    <DashboardLayout title="Dashboard">
+    <DashboardLayout title="Dashboard" userName={userName}>
       <div className="space-y-6">
         {/* Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

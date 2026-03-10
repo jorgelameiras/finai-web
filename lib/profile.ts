@@ -21,5 +21,5 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 export async function upsertProfile(
   profile: Partial<Profile> & { id: string }
 ) {
-  await supabase.from("profiles").upsert(profile);
+  await supabase.from("profiles").upsert(profile, { onConflict: "id" });
 }

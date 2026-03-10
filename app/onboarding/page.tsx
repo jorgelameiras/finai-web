@@ -62,9 +62,11 @@ export default function OnboardingPage() {
   };
 
   const finish = async () => {
-    if (userId) {
+    const { data: { session } } = await supabase.auth.getSession();
+    const uid = session?.user?.id || userId;
+    if (uid) {
       await upsertProfile({
-        id: userId,
+        id: uid,
         name,
         goal,
         income_range: incomeRange,
@@ -321,7 +323,7 @@ function StepIncome({
   );
 }
 
-/* ── Step 5: Bank ── */
+/* ── Step 5: Bank (Mock Plaid) ── */
 function StepBank({
   onConnect,
   onSkip,
@@ -329,6 +331,16 @@ function StepBank({
   onConnect: () => void;
   onSkip: () => void;
 }) {
+  const [showPlaid, setShowPlaid] = useState(false);
+  const [connected, setConnected] = useState(false);
+
+  const handleTestBank = () => {
+    setConnected(true);
+    setTimeout(() => {
+      onConnect();
+    }, 1200);
+  };
+
   return (
     <div className="flex flex-col items-center text-center">
       <div className="w-16 h-16 rounded-2xl bg-[#818CF8]/10 flex items-center justify-center mb-6">
@@ -353,10 +365,10 @@ function StepBank({
         give personalized advice.
       </p>
       <button
-        onClick={onConnect}
+        onClick={() => setShowPlaid(true)}
         className="px-8 py-3 bg-[#818CF8] hover:bg-[#6E7BF5] text-white font-semibold rounded-xl transition-colors mb-4"
       >
-        Connect Bank Account
+        Connect with Plaid
       </button>
       <button
         onClick={onSkip}
@@ -364,6 +376,85 @@ function StepBank({
       >
         I&apos;ll do this later
       </button>
+
+      {/* Mock Plaid overlay */}
+      <AnimatePresence>
+        {showPlaid && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+            onClick={() => !connected && setShowPlaid(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-[#1E1F30] border border-white/10 rounded-2xl p-6 w-full max-w-sm mx-4"
+            >
+              {!connected ? (
+                <>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg font-semibold text-white">
+                      Plaid Link
+                    </h3>
+                    <button
+                      onClick={() => setShowPlaid(false)}
+                      className="text-gray-400 hover:text-white text-xl"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                  <p className="text-gray-400 text-sm mb-6">
+                    Select a bank to connect your account securely.
+                  </p>
+                  <button
+                    onClick={handleTestBank}
+                    className="w-full flex items-center gap-3 p-4 rounded-xl border border-white/10 bg-white/[0.03] hover:border-[#818CF8]/50 transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">
+                      C
+                    </div>
+                    <div className="text-left">
+                      <p className="text-white text-sm font-medium">
+                        Chase Bank
+                      </p>
+                      <p className="text-gray-500 text-xs">
+                        Use test bank (Sandbox)
+                      </p>
+                    </div>
+                  </button>
+                </>
+              ) : (
+                <div className="flex flex-col items-center py-4">
+                  <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mb-4">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#34D399"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  </div>
+                  <p className="text-white font-semibold mb-1">
+                    Chase Bank — Connected
+                  </p>
+                  <p className="text-emerald-400 text-sm">
+                    Bank connected!
+                  </p>
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
