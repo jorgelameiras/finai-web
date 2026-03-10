@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Menu } from "lucide-react";
 import Sidebar from "./Sidebar";
 import { DEMO_USER } from "@/lib/demo";
+import { supabase } from "@/lib/supabase";
 
 export default function DashboardLayout({
   title,
@@ -17,10 +18,13 @@ export default function DashboardLayout({
   const router = useRouter();
 
   useEffect(() => {
-    const demo = localStorage.getItem("demoMode");
-    if (!demo) {
-      router.push("/login");
-    }
+    const checkAuth = async () => {
+      const demo = localStorage.getItem("demoMode");
+      if (demo) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) router.push("/login");
+    };
+    checkAuth();
   }, [router]);
 
   const hour = new Date().getHours();
