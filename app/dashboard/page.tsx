@@ -1,6 +1,9 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import DashboardLayout from "@/components/DashboardLayout";
+import FeatureGate from "@/components/FeatureGate";
 import {
   DEMO_BALANCE,
   DEMO_TRANSACTIONS,
@@ -27,6 +30,8 @@ import {
   Legend,
 } from "recharts";
 import { format, parseISO } from "date-fns";
+import { supabase } from "@/lib/supabase";
+import { getProfile } from "@/lib/profile";
 
 const stats = [
   {
@@ -60,6 +65,39 @@ const stats = [
 ];
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const [ready, setReady] = useState(false);
+  const [hasAiKey, setHasAiKey] = useState(false);
+
+  useEffect(() => {
+    const checkOnboarding = async () => {
+      // Skip onboarding check for demo mode
+      const demoMode = localStorage.getItem("demoMode");
+      if (demoMode === "true") {
+        setHasAiKey(!!localStorage.getItem("aiApiKey"));
+        setReady(true);
+        return;
+      }
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session?.user) return;
+
+      const profile = await getProfile(session.user.id);
+      if (!profile || !profile.onboarding_complete) {
+        router.push("/onboarding");
+        return;
+      }
+
+      setHasAiKey(!!localStorage.getItem("aiApiKey"));
+      setReady(true);
+    };
+    checkOnboarding();
+  }, [router]);
+
+  if (!ready) return null;
+
   return (
     <DashboardLayout title="Dashboard">
       <div className="space-y-6">
@@ -188,10 +226,14 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Spending by Category */}
+          {/* AI Insights — gated behind API key */}
+          <FeatureGate
+            unlocked={hasAiKey}
+            message="Add your AI API key in Settings to unlock AI Insights"
+          >
           <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
             <h3 className="text-base font-semibold text-white mb-4">
-              Spending by Category
+              AI Insights
             </h3>
             <ResponsiveContainer width="100%" height={280}>
               <PieChart>
@@ -225,6 +267,7 @@ export default function DashboardPage() {
               </PieChart>
             </ResponsiveContainer>
           </div>
+          </FeatureGate>
         </div>
       </div>
     </DashboardLayout>
