@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DashboardLayout from "@/components/DashboardLayout";
 import FeatureGate from "@/components/FeatureGate";
+import ThemeToggle from "@/components/ThemeToggle";
 import {
   DEMO_BALANCE,
   DEMO_TRANSACTIONS,
@@ -40,6 +41,7 @@ const stats = [
     icon: DollarSign,
     change: "+2.4%",
     positive: true,
+    isKpi: true,
   },
   {
     label: "Monthly Income",
@@ -47,6 +49,7 @@ const stats = [
     icon: TrendingUp,
     change: "+4.1%",
     positive: true,
+    isKpi: false,
   },
   {
     label: "Monthly Spend",
@@ -54,6 +57,7 @@ const stats = [
     icon: TrendingDown,
     change: "-12.3%",
     positive: true,
+    isKpi: true,
   },
   {
     label: "Savings Rate",
@@ -61,6 +65,7 @@ const stats = [
     icon: PiggyBank,
     change: "+5.2%",
     positive: true,
+    isKpi: false,
   },
 ];
 
@@ -103,24 +108,37 @@ export default function DashboardPage() {
   return (
     <DashboardLayout title="Dashboard" userName={userName}>
       <div className="space-y-6">
+        {/* Header with ThemeToggle */}
+        <div className="flex items-center justify-end">
+          <ThemeToggle />
+        </div>
+
         {/* Stat Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-5"
+              className="glass-card rounded-xl p-5"
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-sm text-gray-400">{stat.label}</span>
-                <div className="w-9 h-9 rounded-lg bg-accent/10 flex items-center justify-center">
-                  <stat.icon size={18} className="text-accent" />
+                <span className="text-sm" style={{ color: 'var(--on-surface-variant)' }}>{stat.label}</span>
+                <div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center"
+                  style={{ background: 'rgba(197,160,89,0.1)' }}
+                >
+                  <stat.icon size={18} style={{ color: 'var(--primary)' }} />
                 </div>
               </div>
-              <p className="text-2xl font-bold text-white">{stat.value}</p>
+              {stat.isKpi ? (
+                <div className="indigo-glow rounded-lg">
+                  <p className="text-2xl font-bold gold-glow" style={{ color: 'var(--primary)' }}>{stat.value}</p>
+                </div>
+              ) : (
+                <p className="text-2xl font-bold" style={{ color: 'var(--on-surface)' }}>{stat.value}</p>
+              )}
               <p
-                className={`text-xs mt-1 ${
-                  stat.positive ? "text-positive" : "text-negative"
-                }`}
+                className="text-xs mt-1"
+                style={{ color: stat.positive ? '#34D399' : '#F87171' }}
               >
                 {stat.change} from last month
               </p>
@@ -129,16 +147,16 @@ export default function DashboardPage() {
         </div>
 
         {/* Balance History Chart */}
-        <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
-          <h3 className="text-base font-semibold text-white mb-4">
+        <div className="glass-card rounded-xl p-6">
+          <h3 className="text-base font-semibold mb-4" style={{ color: 'var(--on-surface)' }}>
             Balance History
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <AreaChart data={DEMO_BALANCE_HISTORY}>
               <defs>
                 <linearGradient id="balanceGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#818CF8" stopOpacity={0.2} />
-                  <stop offset="100%" stopColor="#818CF8" stopOpacity={0} />
+                  <stop offset="0%" stopColor="#C5A059" stopOpacity={0.3} />
+                  <stop offset="100%" stopColor="#C5A059" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <XAxis
@@ -157,17 +175,17 @@ export default function DashboardPage() {
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#1E1F30",
-                  border: "1px solid rgba(255,255,255,0.1)",
+                  backgroundColor: "#1F1F25",
+                  border: "1px solid rgba(197,160,89,0.2)",
                   borderRadius: "8px",
-                  color: "#fff",
+                  color: "#E4E1E9",
                 }}
                 formatter={(value) => [`$${Number(value).toLocaleString()}`, "Balance"]}
               />
               <Area
                 type="monotone"
                 dataKey="balance"
-                stroke="#818CF8"
+                stroke="#C5A059"
                 strokeWidth={2}
                 fill="url(#balanceGrad)"
               />
@@ -178,8 +196,8 @@ export default function DashboardPage() {
         {/* Bottom Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Recent Transactions */}
-          <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
-            <h3 className="text-base font-semibold text-white mb-4">
+          <div className="glass-card rounded-xl p-6">
+            <h3 className="text-base font-semibold mb-4" style={{ color: 'var(--on-surface)' }}>
               Recent Transactions
             </h3>
             <div className="space-y-3">
@@ -191,35 +209,34 @@ export default function DashboardPage() {
                   <div
                     className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium"
                     style={{
-                      backgroundColor: `${CATEGORY_COLORS[tx.category] || "#818CF8"}20`,
-                      color: CATEGORY_COLORS[tx.category] || "#818CF8",
+                      backgroundColor: `${CATEGORY_COLORS[tx.category] || "#C5A059"}20`,
+                      color: CATEGORY_COLORS[tx.category] || "#C5A059",
                     }}
                   >
                     {tx.merchant[0]}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-white">
+                    <p className="text-sm font-medium" style={{ color: 'var(--on-surface)' }}>
                       {tx.merchant}
                     </p>
                     <div className="flex items-center gap-2">
                       <span
                         className="text-xs px-2 py-0.5 rounded-full"
                         style={{
-                          backgroundColor: `${CATEGORY_COLORS[tx.category] || "#818CF8"}15`,
-                          color: CATEGORY_COLORS[tx.category] || "#818CF8",
+                          backgroundColor: `${CATEGORY_COLORS[tx.category] || "#C5A059"}15`,
+                          color: CATEGORY_COLORS[tx.category] || "#C5A059",
                         }}
                       >
                         {tx.category}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs" style={{ color: 'var(--on-surface-variant)' }}>
                         {format(parseISO(tx.date), "MMM d")}
                       </span>
                     </div>
                   </div>
                   <span
-                    className={`text-sm font-medium ${
-                      tx.amount > 0 ? "text-positive" : "text-negative"
-                    }`}
+                    className="text-sm font-medium"
+                    style={{ color: tx.amount > 0 ? '#34D399' : '#F87171' }}
                   >
                     {tx.amount > 0 ? "+" : ""}${Math.abs(tx.amount).toFixed(2)}
                   </span>
@@ -233,8 +250,8 @@ export default function DashboardPage() {
             unlocked={hasAiKey}
             message="Add your AI API key in Settings to unlock AI Insights"
           >
-          <div className="bg-[rgba(30,31,48,0.8)] border border-white/[0.06] rounded-xl p-6">
-            <h3 className="text-base font-semibold text-white mb-4">
+          <div className="glass-card rounded-xl p-6">
+            <h3 className="text-base font-semibold mb-4" style={{ color: 'var(--on-surface)' }}>
               AI Insights
             </h3>
             <ResponsiveContainer width="100%" height={280}>
@@ -254,15 +271,15 @@ export default function DashboardPage() {
                 </Pie>
                 <Legend
                   formatter={(value) => (
-                    <span className="text-gray-300 text-sm">{value}</span>
+                    <span style={{ color: 'var(--on-surface-variant)', fontSize: '0.875rem' }}>{value}</span>
                   )}
                 />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#1E1F30",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    backgroundColor: "#1F1F25",
+                    border: "1px solid rgba(197,160,89,0.2)",
                     borderRadius: "8px",
-                    color: "#fff",
+                    color: "#E4E1E9",
                   }}
                   formatter={(value) => [`${value}%`, "Share"]}
                 />
