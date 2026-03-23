@@ -6,7 +6,7 @@ export default function LandingPage() {
   return (
     <>
       {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-[#0A0A0F]/80 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]">
+      <nav className="fixed top-0 w-full z-50 bg-[#0A0A0F]/80 backdrop-blur-xl shadow-[0_8px_32px_0_rgba(0,0,0,0.36)] border-b border-white/5">
         <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
           <div className="text-xl font-light tracking-widest text-[#E4E1E9]">FinAI</div>
           <div className="hidden md:flex gap-8 items-center">
@@ -23,12 +23,12 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-[921px] flex items-center px-8 max-w-7xl mx-auto py-20">
+      <section className="relative min-h-[921px] flex items-center px-8 max-w-7xl mx-auto py-20 pt-32" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -20%, rgba(75,50,168,0.3) 0%, transparent 60%)' }}>
         <div className="absolute inset-0 hero-glow -z-10"></div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           <div className="space-y-8">
-            <h1 className="text-5xl lg:text-7xl font-headline font-extralight tracking-tight leading-[1.1]">
-              The Finance App That Learns <span className="text-[#E9C176] italic font-light">*Your*</span> Way
+            <h1 className="text-6xl lg:text-8xl font-headline font-thin tracking-tighter leading-[1.1]">
+              The Finance App That Learns <span className="italic font-light bg-gradient-to-r from-[#E9C176] to-[#F5F0E8] bg-clip-text text-transparent">Your</span> Way
             </h1>
             <p className="text-[#D1C5B4] text-lg lg:text-xl font-light max-w-lg leading-relaxed">
               The world&apos;s first financial interface powered by OpenClaw. Connect your own AI agent to redefine how you track, invest, and manage wealth.
@@ -74,23 +74,29 @@ export default function LandingPage() {
       {/* Core Features */}
       <section id="features" className="py-24 px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="glass-card p-10 rounded-2xl hover:translate-y-[-8px] transition-all duration-400 group">
-            <span className="material-symbols-outlined text-[#E9C176] mb-6 text-4xl">query_stats</span>
+          <div className="glass-card p-10 rounded-2xl hover:translate-y-[-8px] transition-all duration-400 group shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            <div className="mb-6 text-[#E9C176]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            </div>
             <h3 className="text-2xl font-headline font-light mb-4">AI Spending Insights</h3>
             <p className="text-[#D1C5B4] font-light leading-relaxed">Automated categorization that actually understands your lifestyle. No manual tagging, ever.</p>
           </div>
-          <div className="glass-card p-10 rounded-2xl hover:translate-y-[-8px] transition-all duration-400 group">
-            <span className="material-symbols-outlined text-[#E9C176] mb-6 text-4xl">account_balance</span>
+          <div className="glass-card p-10 rounded-2xl hover:translate-y-[-8px] transition-all duration-400 group shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+            <div className="mb-6 text-[#E9C176]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 10v11M12 10v11M16 10v11"/></svg>
+            </div>
             <h3 className="text-2xl font-headline font-light mb-4">Bank Connection</h3>
             <p className="text-[#D1C5B4] font-light leading-relaxed">Secure, read-only access to over 12,000 global institutions with 256-bit AES encryption.</p>
           </div>
-          <div className="relative glass-card p-10 rounded-2xl border-[#E9C176]/40 hover:translate-y-[-8px] transition-all duration-400 group overflow-hidden">
+          <div className="relative glass-card p-10 rounded-2xl border-[#E9C176]/40 border-t-2 border-t-[#E9C176] hover:translate-y-[-8px] transition-all duration-400 group overflow-hidden shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
             <div className="absolute inset-0 bg-[#E9C176]/5 -z-10"></div>
-            <span className="material-symbols-outlined text-[#E9C176] mb-6 text-4xl">robot_2</span>
+            <div className="mb-6 text-[#E9C176]">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M8 15h.01M16 15h.01M9 19h6"/></svg>
+            </div>
             <h3 className="text-2xl font-headline font-light mb-4">Customizable with AI</h3>
             <p className="text-[#D1C5B4] font-light leading-relaxed">Connect your OpenClaw agent to build custom widgets, tabs, and alerts using natural language.</p>
             <div className="mt-6 flex items-center text-[#E9C176] text-sm font-bold uppercase tracking-widest group-hover:gap-2 transition-all">
-              Learn More <span className="material-symbols-outlined text-sm">arrow_forward</span>
+              Learn More <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </div>
           </div>
         </div>
@@ -107,11 +113,11 @@ export default function LandingPage() {
             </p>
             <ul className="space-y-4 pt-4">
               <li className="flex items-center gap-4 text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176]">check_circle</span>
+                <svg className="text-[#E9C176]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 Natural language UI generation
               </li>
               <li className="flex items-center gap-4 text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176]">check_circle</span>
+                <svg className="text-[#E9C176]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
                 Custom logic deployment via API
               </li>
             </ul>
@@ -121,7 +127,7 @@ export default function LandingPage() {
               <div className="bg-[#1B1B20] px-6 py-4 flex items-center justify-between border-b border-[#4E4639]/10">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-[#E9C176]/20 flex items-center justify-center">
-                    <span className="material-symbols-outlined text-[#E9C176] text-sm">smart_toy</span>
+                    <svg className="text-[#E9C176]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M8 15h.01M16 15h.01"/></svg>
                   </div>
                   <span className="text-sm font-medium">FinAI Assistant</span>
                 </div>
@@ -141,14 +147,14 @@ export default function LandingPage() {
                   <div className="bg-[#2A292F] rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-lg bg-[#E9C176]/10 flex items-center justify-center">
-                        <span className="material-symbols-outlined text-[#E9C176]">work</span>
+                        <svg className="text-[#E9C176]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                       </div>
                       <div>
                         <div className="text-xs text-[#4E4639] font-bold uppercase">Freelance Vault</div>
                         <div className="text-lg font-light">$12,450.00 <span className="text-[10px] text-[#E9C176]">(Net)</span></div>
                       </div>
                     </div>
-                    <span className="material-symbols-outlined text-[#4E4639]">open_in_new</span>
+                    <svg className="text-[#4E4639]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
                   </div>
                 </div>
               </div>
@@ -167,7 +173,7 @@ export default function LandingPage() {
           <div className="p-8 space-y-8">
             <div className="flex gap-4 items-start">
               <div className="w-10 h-10 rounded-full bg-[#39383E] flex-shrink-0 flex items-center justify-center">
-                <span className="material-symbols-outlined text-[#D1C5B4] text-sm">person</span>
+                <svg className="text-[#D1C5B4]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               </div>
               <div className="bg-[#2A292F]/40 p-5 rounded-2xl rounded-tl-none border border-[#4E4639]/10">
                 <p className="text-[#D1C5B4] leading-relaxed font-light italic">&quot;Hey, add a &apos;Crypto Spending&apos; tab. Categorize by BTC, ETH, and SOL.&quot;</p>
@@ -175,7 +181,7 @@ export default function LandingPage() {
             </div>
             <div className="flex gap-4 items-start flex-row-reverse">
               <div className="w-10 h-10 rounded-full bg-[#E9C176]/20 flex-shrink-0 flex items-center justify-center">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">smart_toy</span>
+                <svg className="text-[#E9C176]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M12 11V7"/><circle cx="12" cy="5" r="2"/><path d="M8 15h.01M16 15h.01"/></svg>
               </div>
               <div className="space-y-4 w-full md:w-2/3">
                 <div className="bg-[#E9C176]/5 p-5 rounded-2xl rounded-tr-none border border-[#E9C176]/10">
@@ -207,21 +213,21 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-[#2A292F] rounded-2xl flex items-center justify-center mx-auto mb-6 rotate-3">
-              <span className="material-symbols-outlined text-[#E9C176] text-3xl">link</span>
+              <svg className="text-[#E9C176]" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             </div>
             <h4 className="text-xl font-headline font-light">1. Connect Bank</h4>
             <p className="text-[#D1C5B4] font-light text-sm">Securely link your accounts via Plaid or Open Banking APIs.</p>
           </div>
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-[#2A292F] rounded-2xl flex items-center justify-center mx-auto mb-6 -rotate-3">
-              <span className="material-symbols-outlined text-[#E9C176] text-3xl">forum</span>
+              <svg className="text-[#E9C176]" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
             <h4 className="text-xl font-headline font-light">2. Chat with AI</h4>
             <p className="text-[#D1C5B4] font-light text-sm">Tell your agent how you want to see your money. Use your own model via OpenClaw.</p>
           </div>
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-[#2A292F] rounded-2xl flex items-center justify-center mx-auto mb-6 rotate-6">
-              <span className="material-symbols-outlined text-[#E9C176] text-3xl">dashboard_customize</span>
+              <svg className="text-[#E9C176]" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             </div>
             <h4 className="text-xl font-headline font-light">3. Customize Dashboard</h4>
             <p className="text-[#D1C5B4] font-light text-sm">Watch the app transform into your personal private banking interface.</p>
@@ -231,6 +237,8 @@ export default function LandingPage() {
 
       {/* Pricing */}
       <section id="pricing" className="py-32 px-8 max-w-7xl mx-auto">
+        <h2 className="text-center text-4xl font-light mb-4">Simple Pricing</h2>
+        <p className="text-center text-[#D1C5B4] mb-16">Start free, upgrade when you&apos;re ready</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Free */}
           <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-transparent">
@@ -240,18 +248,18 @@ export default function LandingPage() {
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
               <li className="flex items-center gap-3 text-sm text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Bank Syncing (3 banks)
               </li>
               <li className="flex items-center gap-3 text-sm text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Basic AI Categorization
               </li>
             </ul>
             <Link href="/signup" className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors text-center block">Start Free</Link>
           </div>
           {/* Pro */}
-          <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-[#E9C176]/30 relative overflow-hidden">
+          <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-[#E9C176]/30 relative overflow-hidden shadow-[0_0_40px_rgba(233,193,118,0.15)]">
             <div className="absolute top-0 right-0 bg-[#E9C176] px-4 py-1 text-[10px] font-bold text-[#412D00] uppercase tracking-widest rounded-bl-xl">Popular</div>
             <div className="mb-8">
               <h3 className="text-xl font-light mb-2 text-[#E9C176]">Pro</h3>
@@ -259,15 +267,15 @@ export default function LandingPage() {
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
               <li className="flex items-center gap-3 text-sm text-[#E9C176] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Unlimited Bank Connections
               </li>
               <li className="flex items-center gap-3 text-sm text-[#E9C176] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 OpenClaw AI Customization
               </li>
               <li className="flex items-center gap-3 text-sm text-[#E9C176] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Custom Dashboards
               </li>
             </ul>
@@ -281,15 +289,15 @@ export default function LandingPage() {
             </div>
             <ul className="space-y-4 mb-10 flex-grow">
               <li className="flex items-center gap-3 text-sm text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Everything in Pro
               </li>
               <li className="flex items-center gap-3 text-sm text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Multi-user / Family Vaults
               </li>
               <li className="flex items-center gap-3 text-sm text-[#D1C5B4] font-light">
-                <span className="material-symbols-outlined text-[#E9C176] text-sm">check</span>
+                <svg className="text-[#E9C176] flex-shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 Priority Concierge AI
               </li>
             </ul>
@@ -306,7 +314,7 @@ export default function LandingPage() {
           <p className="text-[#D1C5B4] text-xl font-light">Experience the future of wealth management. Private, intelligent, and entirely yours.</p>
           <Link href="/signup" className="inline-flex items-center gap-4 bg-[#E9C176] text-[#412D00] px-12 py-6 rounded-2xl text-xl font-extrabold hover:scale-105 transition-all duration-400 group">
             Get Started Now
-            <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
+            <svg className="group-hover:translate-x-2 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </Link>
         </div>
       </section>
@@ -316,7 +324,7 @@ export default function LandingPage() {
         <div className="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-7xl mx-auto gap-8">
           <div className="space-y-4 text-center md:text-left">
             <div className="text-lg font-light text-[#E4E1E9] uppercase tracking-widest">FinAI</div>
-            <p className="font-manrope text-sm font-light text-[#78716C]">&copy; 2024 FinAI. The Digital Private Vault.</p>
+            <p className="font-manrope text-sm font-light text-[#78716C]">&copy; 2025 FinAI. The Digital Private Vault.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
             <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="#privacy">Privacy Policy</a>
