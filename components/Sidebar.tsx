@@ -25,6 +25,7 @@ import {
   Package,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import Link from "next/link";
 import { DEMO_USER } from "@/lib/demo";
 import { loadCustomTabs, CustomTab } from "@/lib/aiProviders";
 
@@ -88,10 +89,10 @@ export default function Sidebar({
         }`}
       >
         <div className="flex items-center justify-between p-6">
-          <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <span className="text-xl font-bold text-white">Fin</span>
             <span className="text-xl font-bold text-accent">AI</span>
-          </div>
+          </Link>
           <button onClick={onClose} className="lg:hidden text-gray-400">
             <X size={20} />
           </button>

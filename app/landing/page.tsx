@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import './landing.css';
 
 export default function LandingPage() {
@@ -9,14 +10,14 @@ export default function LandingPage() {
         <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
           <div className="text-xl font-light tracking-widest text-[#E4E1E9]">FinAI</div>
           <div className="hidden md:flex gap-8 items-center">
-            <a className="text-[#C5A059] font-medium font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#solutions">Solutions</a>
-            <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#openclaw">OpenClaw</a>
-            <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#intelligence">Intelligence</a>
+            <a className="text-[#C5A059] font-medium font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#features">Solutions</a>
+            <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#differentiator">OpenClaw</a>
+            <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#chat-showcase">Intelligence</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#pricing">Pricing</a>
           </div>
           <div className="flex gap-4 items-center">
-            <button className="text-[#D1C5B4] text-sm font-manrope font-light hover:text-[#C5A059] transition-all duration-400">Sign In</button>
-            <button className="bg-[#C5A059] text-[#412D00] px-6 py-2 rounded-full text-sm font-bold scale-95 duration-400 hover:scale-100 transition-transform">Get Started</button>
+            <Link href="/login" className="text-[#D1C5B4] text-sm font-manrope font-light hover:text-[#C5A059] transition-all duration-400">Sign In</Link>
+            <Link href="/signup" className="bg-[#C5A059] text-[#412D00] px-6 py-2 rounded-full text-sm font-bold scale-95 duration-400 hover:scale-100 transition-transform">Get Started</Link>
           </div>
         </div>
       </nav>
@@ -33,8 +34,8 @@ export default function LandingPage() {
               The world&apos;s first financial interface powered by OpenClaw. Connect your own AI agent to redefine how you track, invest, and manage wealth.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="bg-[#E9C176] text-[#412D00] px-8 py-4 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(233,193,118,0.3)] transition-all duration-400">Get Started</button>
-              <button className="border border-[#4E4639]/30 text-[#E9C176] px-8 py-4 rounded-xl font-medium hover:bg-[#1B1B20] transition-all duration-400">See How It Works</button>
+              <Link href="/signup" className="bg-[#E9C176] text-[#412D00] px-8 py-4 rounded-xl font-bold hover:shadow-[0_0_20px_rgba(233,193,118,0.3)] transition-all duration-400">Get Started</Link>
+              <a href="#features" className="border border-[#4E4639]/30 text-[#E9C176] px-8 py-4 rounded-xl font-medium hover:bg-[#1B1B20] transition-all duration-400">See How It Works</a>
             </div>
           </div>
           <div className="relative">
@@ -71,7 +72,7 @@ export default function LandingPage() {
       </section>
 
       {/* Core Features */}
-      <section className="py-24 px-8 max-w-7xl mx-auto">
+      <section id="features" className="py-24 px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="glass-card p-10 rounded-2xl hover:translate-y-[-8px] transition-all duration-400 group">
             <span className="material-symbols-outlined text-[#E9C176] mb-6 text-4xl">query_stats</span>
@@ -96,7 +97,7 @@ export default function LandingPage() {
       </section>
 
       {/* The Big Differentiator */}
-      <section className="bg-[#0E0E13] py-32 px-8 overflow-hidden">
+      <section id="differentiator" className="bg-[#0E0E13] py-32 px-8 overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           <div className="space-y-8">
             <div className="inline-block px-3 py-1 bg-[#CABEFF]/10 border border-[#CABEFF]/20 rounded-full text-[#CABEFF] text-[10px] font-bold uppercase tracking-widest">The OpenClaw Edge</div>
@@ -157,7 +158,7 @@ export default function LandingPage() {
       </section>
 
       {/* AI Chat Showcase */}
-      <section className="py-32 px-8 max-w-5xl mx-auto">
+      <section id="chat-showcase" className="py-32 px-8 max-w-5xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-headline font-light mb-4">Infinite Customization</h2>
           <p className="text-[#D1C5B4] font-light">Watch how FinAI adapts to specific investment needs.</p>
@@ -229,7 +230,7 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section className="py-32 px-8 max-w-7xl mx-auto">
+      <section id="pricing" className="py-32 px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Free */}
           <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-transparent">
@@ -247,7 +248,7 @@ export default function LandingPage() {
                 Basic AI Categorization
               </li>
             </ul>
-            <button className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors">Start Free</button>
+            <Link href="/signup" className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors text-center block">Start Free</Link>
           </div>
           {/* Pro */}
           <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-[#E9C176]/30 relative overflow-hidden">
@@ -270,7 +271,7 @@ export default function LandingPage() {
                 Custom Dashboards
               </li>
             </ul>
-            <button className="w-full py-4 rounded-xl bg-[#E9C176] text-[#412D00] font-bold shadow-lg shadow-[#E9C176]/10 hover:shadow-[#E9C176]/20 transition-all">Get Pro</button>
+            <Link href="/signup?plan=pro" className="w-full py-4 rounded-xl bg-[#E9C176] text-[#412D00] font-bold shadow-lg shadow-[#E9C176]/10 hover:shadow-[#E9C176]/20 transition-all text-center block">Get Pro</Link>
           </div>
           {/* Premium */}
           <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-transparent">
@@ -292,7 +293,7 @@ export default function LandingPage() {
                 Priority Concierge AI
               </li>
             </ul>
-            <button className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors">Go Premium</button>
+            <Link href="/signup?plan=premium" className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors text-center block">Go Premium</Link>
           </div>
         </div>
       </section>
@@ -303,10 +304,10 @@ export default function LandingPage() {
         <div className="space-y-8 max-w-3xl mx-auto">
           <h2 className="text-4xl lg:text-6xl font-headline font-light leading-tight">Start Building Your Finance App</h2>
           <p className="text-[#D1C5B4] text-xl font-light">Experience the future of wealth management. Private, intelligent, and entirely yours.</p>
-          <button className="inline-flex items-center gap-4 bg-[#E9C176] text-[#412D00] px-12 py-6 rounded-2xl text-xl font-extrabold hover:scale-105 transition-all duration-400 group">
+          <Link href="/signup" className="inline-flex items-center gap-4 bg-[#E9C176] text-[#412D00] px-12 py-6 rounded-2xl text-xl font-extrabold hover:scale-105 transition-all duration-400 group">
             Get Started Now
             <span className="material-symbols-outlined group-hover:translate-x-2 transition-transform">arrow_forward</span>
-          </button>
+          </Link>
         </div>
       </section>
 

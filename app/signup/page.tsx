@@ -77,6 +77,12 @@ export default function SignupPage() {
               >
                 Back to Sign In
               </Link>
+              <Link
+                href="/"
+                className="text-gray-400 text-sm hover:underline block mt-2"
+              >
+                Back to Home
+              </Link>
             </div>
           ) : (
             <form onSubmit={handleSignup} className="space-y-4">
