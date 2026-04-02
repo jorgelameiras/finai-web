@@ -1,11 +1,286 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ─── Glass Card ─── */
 .glass-card {
-  background: rgba(31, 31, 37, 0.8);
+  background: rgba(31, 31, 37, 0.6);
   backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(78, 70, 57, 0.15);
 }
+
+/* ─── Hero Glow ─── */
 .hero-glow {
   background: radial-gradient(circle at center, rgba(75, 50, 168, 0.15) 0%, transparent 70%);
+}
+
+/* ─── Animated Background Grid ─── */
+.hero-bg-grid {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 50% at 50% 40%, black 30%, transparent 80%);
+}
+
+.hero-bg-grid::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background-image:
+    linear-gradient(rgba(233, 193, 118, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233, 193, 118, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridDrift 20s linear infinite;
+}
+
+@keyframes gridDrift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(60px, 60px); }
+}
+
+/* ─── Floating Orbs ─── */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: orbFloat 12s ease-in-out infinite;
+}
+
+.hero-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(75, 50, 168, 0.35), transparent 70%);
+  top: -10%;
+  right: 10%;
+  animation-delay: 0s;
+  animation-duration: 14s;
+}
+
+.hero-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(233, 193, 118, 0.2), transparent 70%);
+  bottom: 10%;
+  left: 5%;
+  animation-delay: -4s;
+  animation-duration: 18s;
+}
+
+.hero-orb-3 {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(202, 190, 255, 0.15), transparent 70%);
+  top: 40%;
+  left: 40%;
+  animation-delay: -8s;
+  animation-duration: 16s;
+}
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+
+/* ─── Feature Card Gradient Border ─── */
+.feature-card {
+  position: relative;
+  background: rgba(31, 31, 37, 0.6);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(78, 70, 57, 0.12);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(233, 193, 118, 0.0) 0%, rgba(233, 193, 118, 0.08) 50%, rgba(202, 190, 255, 0.0) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.feature-card:hover::before {
+  opacity: 1;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(233, 193, 118, 0.06);
+  border-color: rgba(233, 193, 118, 0.15);
+}
+
+/* ─── Featured card (highlighted) ─── */
+.feature-card-featured {
+  border-color: rgba(233, 193, 118, 0.25);
+  background: linear-gradient(135deg, rgba(233, 193, 118, 0.04) 0%, rgba(31, 31, 37, 0.6) 100%);
+}
+
+.feature-card-featured::before {
+  background: linear-gradient(135deg, rgba(233, 193, 118, 0.2) 0%, rgba(233, 193, 118, 0.05) 50%, rgba(202, 190, 255, 0.1) 100%);
+  opacity: 1;
+}
+
+/* ─── Pro Pricing Card Glow Border ─── */
+.pricing-pro {
+  position: relative;
+  border: 1px solid rgba(233, 193, 118, 0.3);
+  background: linear-gradient(180deg, rgba(233, 193, 118, 0.06) 0%, rgba(31, 31, 37, 0.6) 40%);
+}
+
+.pricing-pro::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(180deg, rgba(233, 193, 118, 0.4) 0%, rgba(233, 193, 118, 0.08) 50%, rgba(202, 190, 255, 0.15) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.pricing-pro::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: radial-gradient(ellipse at 50% 0%, rgba(233, 193, 118, 0.15), transparent 60%);
+  z-index: -1;
+  filter: blur(20px);
+}
+
+/* ─── Chat Bubble Typing Dots ─── */
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+.typing-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #D1C5B4;
+  animation: typingDot 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ─── CTA Section Glow ─── */
+.cta-glow {
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(233, 193, 118, 0.08), transparent 70%),
+              radial-gradient(ellipse 40% 60% at 30% 50%, rgba(75, 50, 168, 0.1), transparent 70%);
+}
+
+/* ─── Icon Container ─── */
+.icon-container {
+  background: linear-gradient(135deg, rgba(233, 193, 118, 0.12) 0%, rgba(233, 193, 118, 0.04) 100%);
+  border: 1px solid rgba(233, 193, 118, 0.1);
+}
+
+/* ─── Trust Bar Separator ─── */
+.trust-divider {
+  width: 1px;
+  height: 24px;
+  background: linear-gradient(180deg, transparent, rgba(233, 193, 118, 0.3), transparent);
+}
+
+/* ─── Sparkline SVG ─── */
+.sparkline-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: drawLine 2s ease forwards;
+}
+
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ─── Mobile Nav Toggle ─── */
+.mobile-nav-toggle {
+  display: none;
+}
+
+.mobile-nav-overlay {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-nav-toggle:checked ~ .mobile-nav-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav-menu {
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-nav-toggle:checked ~ .mobile-nav-menu {
+  transform: translateX(0);
+}
+
+/* Hamburger animation */
+.hamburger-line {
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.mobile-nav-toggle:checked ~ label .hamburger-line:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.mobile-nav-toggle:checked ~ label .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-nav-toggle:checked ~ label .hamburger-line:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ─── Step Number ─── */
+.step-number {
+  background: linear-gradient(135deg, rgba(233, 193, 118, 0.15) 0%, rgba(233, 193, 118, 0.05) 100%);
+  border: 1px solid rgba(233, 193, 118, 0.2);
+  color: #E9C176;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Section Divider ─── */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(78, 70, 57, 0.3), transparent);
+}
+
+/* ─── Chat Demo ─── */
+.chat-window {
+  background: #0E0E13;
+  border: 1px solid rgba(78, 70, 57, 0.15);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(75, 50, 168, 0.08);
+}
+
+/* ─── Smooth entrance ─── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
 }
