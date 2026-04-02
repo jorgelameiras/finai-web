@@ -10,7 +10,7 @@ export default function LandingPage() {
         <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
           <div className="text-xl font-light tracking-widest text-[#E4E1E9]">FinAI</div>
           <div className="hidden md:flex gap-8 items-center">
-            <a className="text-[#C5A059] font-medium font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#features">Solutions</a>
+            <a className="text-[#C5A059] font-manrope font-medium tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#features">Solutions</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#differentiator">OpenClaw</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#chat-showcase">Intelligence</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#pricing">Pricing</a>
@@ -324,14 +324,12 @@ export default function LandingPage() {
         <div className="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-7xl mx-auto gap-8">
           <div className="space-y-4 text-center md:text-left">
             <div className="text-lg font-light text-[#E4E1E9] uppercase tracking-widest">FinAI</div>
-            <p className="font-manrope text-sm font-light text-[#78716C]">&copy; 2025 FinAI. The Digital Private Vault.</p>
+            <p className="font-manrope text-sm font-light text-[#78716C]">&copy; 2026 FinAI. The Digital Private Vault.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
-            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="#privacy">Privacy Policy</a>
-            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="#terms">Terms of Service</a>
-            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="#security">Security</a>
-            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="#status">Status</a>
-            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="#api">OpenClaw API</a>
+            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="/privacy">Privacy Policy</a>
+            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="/terms">Terms of Service</a>
+            <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="mailto:support@finai.app">Contact</a>
           </div>
         </div>
       </footer>
