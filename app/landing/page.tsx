@@ -28,7 +28,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center w-full">
           <div className="space-y-8">
             <h1 className="text-6xl lg:text-8xl font-headline font-thin tracking-tighter leading-[1.1]">
-              The Finance App That Learns <span className="italic font-light bg-gradient-to-r from-[#E9C176] to-[#F5F0E8] bg-clip-text text-transparent">Your</span> Way
+              The Finance App That Learns <span className="italic font-light bg-gradient-to-r from-[#E9C176] to-[#F5F0E8] bg-clip-text text-transparent pr-2">Your</span> Way
             </h1>
             <p className="text-[#D1C5B4] text-lg lg:text-xl font-light max-w-lg leading-relaxed">
               The world&apos;s first financial interface powered by OpenClaw. Connect your own AI agent to redefine how you track, invest, and manage wealth.
