@@ -10,7 +10,7 @@ export default function LandingPage() {
         <div className="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
           <div className="text-xl font-light tracking-widest text-[#E4E1E9]">FinAI</div>
           <div className="hidden md:flex gap-8 items-center">
-            <a className="text-[#C5A059] font-manrope font-medium tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#features">Solutions</a>
+            <a className="text-[#C5A059] font-manrope font-medium tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#features">Features</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#differentiator">OpenClaw</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#chat-showcase">Intelligence</a>
             <a className="text-[#D1C5B4] font-manrope font-light tracking-tight hover:text-[#C5A059] transition-all duration-400 ease-out" href="#pricing">Pricing</a>
@@ -53,7 +53,7 @@ export default function LandingPage() {
                 <div className="grid grid-cols-2 gap-4">
                   <div className="h-24 bg-[#2A292F]/50 rounded-xl flex flex-col justify-end p-4">
                     <div className="text-[10px] text-[#E9C176] font-bold uppercase mb-1">Portfolio</div>
-                    <div className="text-xl font-light">$842,910.00</div>
+                    <div className="text-xl font-light">$24,350.00</div>
                   </div>
                   <div className="h-24 bg-[#2A292F]/50 rounded-xl flex flex-col justify-end p-4">
                     <div className="text-[10px] text-[#CABEFF] font-bold uppercase mb-1">Growth</div>
@@ -65,7 +65,7 @@ export default function LandingPage() {
             </div>
             <div className="absolute -bottom-8 -left-8 glass-card p-4 rounded-xl border-l-4 border-[#CABEFF] max-w-[200px] hidden md:block">
               <div className="text-[10px] font-bold text-[#FFDEA5] mb-2 uppercase">AI Insight</div>
-              <p className="text-xs text-[#D1C5B4] italic">&quot;Your recurring SaaS spend is 14% higher than last month. Should I optimize?&quot;</p>
+              <p className="text-xs text-[#D1C5B4] italic">&quot;You spent 18% more on dining this month. Want me to set a weekly budget alert?&quot;</p>
             </div>
           </div>
         </div>
@@ -256,7 +256,7 @@ export default function LandingPage() {
                 Basic AI Categorization
               </li>
             </ul>
-            <Link href="/signup" className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors text-center block">Start Free</Link>
+            <Link href="/signup" className="w-full py-4 rounded-xl border border-[#4E4639]/30 font-medium hover:bg-[#1B1B20] transition-colors text-center block">Get Started Free</Link>
           </div>
           {/* Pro */}
           <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-[#E9C176]/30 relative overflow-hidden shadow-[0_0_40px_rgba(233,193,118,0.15)]">
@@ -279,7 +279,7 @@ export default function LandingPage() {
                 Custom Dashboards
               </li>
             </ul>
-            <Link href="/signup?plan=pro" className="w-full py-4 rounded-xl bg-[#E9C176] text-[#412D00] font-bold shadow-lg shadow-[#E9C176]/10 hover:shadow-[#E9C176]/20 transition-all text-center block">Get Pro</Link>
+            <Link href="/signup?plan=pro" className="w-full py-4 rounded-xl bg-[#E9C176] text-[#412D00] font-bold shadow-lg shadow-[#E9C176]/10 hover:shadow-[#E9C176]/20 transition-all text-center block">Start Pro Trial</Link>
           </div>
           {/* Premium */}
           <div className="glass-card p-10 rounded-3xl flex flex-col h-full border-transparent">
@@ -324,7 +324,7 @@ export default function LandingPage() {
         <div className="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-7xl mx-auto gap-8">
           <div className="space-y-4 text-center md:text-left">
             <div className="text-lg font-light text-[#E4E1E9] uppercase tracking-widest">FinAI</div>
-            <p className="font-manrope text-sm font-light text-[#78716C]">&copy; 2026 FinAI. The Digital Private Vault.</p>
+            <p className="font-manrope text-sm font-light text-[#78716C]">&copy; {new Date().getFullYear()} FinAI. The Digital Private Vault.</p>
           </div>
           <div className="flex flex-wrap justify-center gap-8">
             <a className="font-manrope text-sm font-light text-[#78716C] hover:text-[#D1C5B4] transition-colors duration-400" href="/privacy">Privacy Policy</a>

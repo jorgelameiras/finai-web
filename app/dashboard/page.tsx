@@ -53,9 +53,9 @@ const stats = [
   },
   {
     label: "Monthly Spend",
-    value: "$277.88",
+    value: "$2,780.00",
     icon: TrendingDown,
-    change: "-12.3%",
+    change: "-8.1%",
     positive: true,
     isKpi: true,
   },

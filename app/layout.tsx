@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FinAI - Smart Financial Management",
-  description: "AI-powered personal finance dashboard",
+  title: "FinAI — Smart Financial Management",
+  description: "AI-powered personal finance app that learns your habits. Track spending, connect banks, and customize your dashboard with natural language — all private and secure.",
 };
 
 export default function RootLayout({
