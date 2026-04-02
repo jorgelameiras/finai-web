@@ -64,9 +64,9 @@ export default function LandingPage() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#E9C176] animate-pulse" />
               <span className="text-[11px] font-semibold tracking-widest uppercase text-[#E9C176]">Now in Public Beta</span>
             </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-[5.25rem] font-light tracking-[-0.035em] leading-[1.05]">
+            <h1 className="text-5xl sm:text-6xl lg:text-[5.25rem] font-light tracking-[-0.035em] leading-[1.1] overflow-visible">
               The Finance App<br className="hidden sm:block" /> That Learns{' '}
-              <span className="italic font-normal bg-gradient-to-r from-[#E9C176] via-[#F5E6C8] to-[#E9C176] bg-clip-text text-transparent">Your</span>{' '}
+              <span className="italic font-normal bg-gradient-to-r from-[#E9C176] via-[#F5E6C8] to-[#E9C176] bg-clip-text text-transparent inline-block pb-1 pr-3">Your</span>{' '}
               Way
             </h1>
             <p className="text-[#D1C5B4]/80 text-lg lg:text-xl font-light max-w-lg leading-relaxed tracking-[-0.01em]">
